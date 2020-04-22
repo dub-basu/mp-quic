@@ -104,7 +104,7 @@ for s1_delay in s1_delays:
                                     qdisc_file.write( qdisc_interface.format("s1-eth1", str(s1_delay), str(s1_delay//10), str(s1_loss), str(s1_bandwidth)) )
                                     qdisc_file.write( qdisc_interface.format("s1-eth2", str(s1_delay), str(s1_delay//10), str(s1_loss), str(s1_bandwidth)) )
                                     qdisc_file.write( qdisc_interface.format("s2-eth1", str(s2_delay), str(s2_delay//10), str(s2_loss), str(s2_bandwidth)) )
-                                    qdisc_file.write( qdisc_interface.format("s2-eth1", str(s2_delay), str(s2_delay//10), str(s2_loss), str(s2_bandwidth)) )
+                                    qdisc_file.write( qdisc_interface.format("s2-eth2", str(s2_delay), str(s2_delay//10), str(s2_loss), str(s2_bandwidth)) )
 
                                     qdisc_file.write(qdisc_terminate)
                                     qdisc_file.close()
