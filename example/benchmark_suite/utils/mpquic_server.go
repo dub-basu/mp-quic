@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"math/big"
 	"strconv"
+	"time"
 
 	quic "github.com/lucas-clemente/quic-go"
 )
@@ -23,7 +24,9 @@ func main() {
 	}
 
 	quicConfig := &quic.Config{
-		CreatePaths: true,
+		CreatePaths:      true,
+		HandshakeTimeout: 30 * time.Second,
+		IdleTimeout:      60 * time.Second,
 	}
 	listener, err := quic.ListenAddr(addr, generateTLSConfig(), quicConfig)
 

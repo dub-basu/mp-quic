@@ -22,7 +22,9 @@ var numBlocks = flag.Int("numBlocks", 10, "number of blocks to be requested")
 func main() {
 	flag.Parse()
 	quicConfig := &quic.Config{
-		CreatePaths: true,
+		CreatePaths:      true,
+		HandshakeTimeout: 30 * time.Second,
+		IdleTimeout:      60 * time.Second,
 	}
 
 	sess, err := quic.DialAddr(addr, &tls.Config{InsecureSkipVerify: true}, quicConfig)
@@ -48,6 +50,7 @@ func requestChunkedData(stream quic.Stream, finished chan bool) error {
 		for bytesToRead > 0 {
 			bytesRead, err := stream.Read(buff)
 			if err != nil {
+				fmt.Println(err)
 				fmt.Println("ERROR requestrequestChunkedData")
 				return err
 			}
