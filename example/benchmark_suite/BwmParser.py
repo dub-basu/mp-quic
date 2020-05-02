@@ -65,7 +65,7 @@ class BwmParser:
             self.plots[iface]['total'] = []
 
         for row in self.data:
-            timestamp = int(row[0])
+            timestamp = float(row[0])
             iface = row[1]
             if iface in self.ifaces:
                 self.plots[iface]['out'].append((timestamp,int(row[2])/(1024*1024)))
@@ -74,6 +74,8 @@ class BwmParser:
 
         for iface, dats in self.plots.items():
             for direction, dat in dats.items():
+                base_time = dat[0][0]
+                dat = list(map(lambda tup: (tup[0]-base_time, tup[1]), dat))
                 self.plots[iface][direction] = self.tune_precision(dat)
 
         for iface,dats in self.plots.items():
@@ -103,9 +105,11 @@ class BwmParser:
             if iface in TP_INTERFACES:
                 self.ifaces.add(iface)
 
-    def tune_precision(self, sample_data):
-        base_time = sample_data[0][0]
-        data = list(map(lambda tup: (tup[0]-base_time, tup[1]), sample_data))
+    def tune_precision(self, data):
+        """ This method is redundant after the bwm-ng version upgrade
+            which gives timestamp values with precision 1e-6 seconds
+            instead of the earlier 1 second precision.
+        """
 
         increments = {}
         counts = {}
